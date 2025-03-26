@@ -10,6 +10,13 @@ io.on("connection", (socket) => {
 
     console.log(`✅ User connected: ${socket.id} | Total Users: ${connectedUsers}`);
 
+     socket.on("chatMessage", (data) => {
+        console.log(data)
+        io.emit("chatMessage", {
+            "username" : data.username,
+            "message": data.message
+        });
+    });
     socket.on("disconnect", () => {
         connectedUsers--; // Decrement count
         io.emit("userCount", connectedUsers); // Send updated count to all users
